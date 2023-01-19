@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a809fd9a26d351044974cf613c381689, type: 3}
+  m_Name: Quarter
+  m_EditorClassIdentifier: 
+  unitName: Quarter
+  description: A building to create an army.
+  code: 2
+  state: 0
+  healthpoints: 1000
+  cost:
+  - code: 1
+    amount: 100
+  - code: 2
+    amount: 50
+  abilities:
+  - {fileID: 11400000, guid: feb4803ff4a51b74e88e1abf9be5da88, type: 2}
+  prefab: {fileID: 9011176396266100239, guid: 4e1675c0219975449b13e598b5bfbf2e, type: 3}
+  fieldOfView: 20
+  owner: 0

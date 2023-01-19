@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a809fd9a26d351044974cf613c381689, type: 3}
+  m_Name: House
+  m_EditorClassIdentifier: 
+  unitName: House
+  description: A small house to shelter some people.
+  code: 0
+  state: 0
+  healthpoints: 500
+  cost:
+  - code: 1
+    amount: 100
+  abilities: []
+  prefab: {fileID: 9011176396266100239, guid: b6153094070ca9e4a95f7d127c9510be, type: 3}
+  fieldOfView: 17
+  owner: 0

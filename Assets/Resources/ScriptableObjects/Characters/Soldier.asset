@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 930ad643cbbf3464db35faba0ac37897, type: 3}
+  m_Name: Soldier
+  m_EditorClassIdentifier: 
+  unitName: Soldier
+  description: Military unity, stronger than normal villagers.
+  code: 3
+  state: 0
+  healthpoints: 100
+  cost:
+  - code: 0
+    amount: 70
+  - code: 2
+    amount: 30
+  abilities: []
+  prefab: {fileID: 3616701865613567754, guid: 89181be5895e8d1459ca4859a630c4dc, type: 3}
+  fieldOfView: 15
+  owner: 0
+  resourceCapacity: 0
+  resourceQuantity: 0
+  resourceType: 0
+  collectionTime: 1
