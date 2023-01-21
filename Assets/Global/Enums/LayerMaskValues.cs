@@ -11,5 +11,6 @@ namespace T4.Globals
         public static int FogLayer { get; } = 1 << LayerMask.NameToLayer("Fog");
         public static int ObstaclesLayer { get; } = 1 << LayerMask.NameToLayer("Obstacles");
         public static int ResourceVeilLayer { get; } = 1 << LayerMask.NameToLayer("ResourceVeil");
+        public static int BuildingLayer { get; } = 1 << LayerMask.NameToLayer("Building");
     }
 }

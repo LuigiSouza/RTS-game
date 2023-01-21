@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using T4.Resource;
+using T4.Units.Abilities;
 using UnityEngine;
 
 namespace T4.Units.Characters
@@ -15,6 +16,14 @@ namespace T4.Units.Characters
 
         public CharacterData(int owner) : base(owner)
         {
+        }
+
+        public override UnitData Clone()
+        {
+            CharacterData clone = (CharacterData)MemberwiseClone();
+            clone.cost = new List<ResourceValue>(cost);
+            clone.abilities = new List<AbilityData>(abilities);
+            return clone;
         }
     }
 }

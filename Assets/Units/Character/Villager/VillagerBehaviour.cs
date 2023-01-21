@@ -2,6 +2,7 @@ using T4.Events;
 using T4.Globals;
 using T4.Managers;
 using T4.Resource;
+using T4.Units.Buildings;
 using UnityEngine;
 
 namespace T4.Units.Characters
@@ -9,6 +10,7 @@ namespace T4.Units.Characters
     public class VillagerBehaviour : CharacterBehaviour
     {
         private GameResource resource;
+        private Building building;
 
         protected override void FixedUpdate()
         {
@@ -22,7 +24,6 @@ namespace T4.Units.Characters
             {
                 if (isDirty)
                 {
-                    Debug.Log("Indo Coletar");
                     SetResourceTarget();
                 }
                 else
@@ -30,12 +31,33 @@ namespace T4.Units.Characters
                     CollectBehaviour();
                 }
             }
+            else if (behaviourTarget == BehaviourType.BUILD)
+            {
+                if (isDirty)
+                {
+                    Debug.Log("Indo Construir");
+                    SetBuildTarget();
+                }
+                else
+                {
+                    Debug.Log("Construindo");
+                    BuildBehaviour();
+                }
+            }
+            else if (target == null)
+            {
+                behaviourTarget = BehaviourType.NONE;
+                MoveCharacter(transform.position, UnitState.IDLE);
+            }
         }
 
         #region COLLECT RESOURCES
         private void ReturnResources()
         {
-            UpdateTarget(prevTarget, BehaviourType.COLLECT, UnitState.FOLLOWING);
+            if (prevTarget != null)
+            {
+                UpdateTarget(prevTarget, BehaviourType.COLLECT, UnitState.FOLLOWING);
+            }
             GameManager.Instance.GetResource(character.Unit.Owner, Data.resourceType).AddAmount(Data.resourceQuantity);
             EventManager.Instance.Raise(new ChangeResourceEventHandler());
             Data.resourceQuantity = 0;
@@ -47,13 +69,18 @@ namespace T4.Units.Characters
             float passed = Time.realtimeSinceStartup - LastAcionTime;
             if (passed >= Data.collectionTime)
             {
-                Debug.Log("Coletou");
-                Data.resourceQuantity += 1;
-                LastAcionTime = Time.realtimeSinceStartup;
+                if (resource && resource.Extract())
+                {
+                    Data.resourceQuantity += 1;
+                    LastAcionTime = Time.realtimeSinceStartup;
+                }
+                else
+                {
+                    UpdateTarget(GameManager.Instance.PlayerCastles[Data.owner].Transform.gameObject, BehaviourType.COLLECT, UnitState.RETURNING);
+                }
             }
-            if (Data.resourceQuantity >= Data.resourceCapacity)
+            if (Data.resourceQuantity >= Data.resourceCapacity || resource == null)
             {
-                Debug.Log("Voltando");
                 UpdateTarget(GameManager.Instance.PlayerCastles[Data.owner].Transform.gameObject, BehaviourType.COLLECT, UnitState.RETURNING);
                 LastAcionTime = Time.realtimeSinceStartup;
                 canAct = false;
@@ -76,21 +103,6 @@ namespace T4.Units.Characters
             LastAcionTime = -1;
             isDirty = false;
         }
-        #endregion
-
-        #region MOVE CHARACTER
-        private void MoveCharacter(Vector3 destiny, UnitState state)
-        {
-            character.Unit.Data.state = state;
-            character.MoveTo(destiny);
-        }
-
-        private void UpdateTarget(GameObject target, BehaviourType behaviour, UnitState state)
-        {
-            SetTarget(target, behaviour);
-            MoveCharacter(target.transform.position, state);
-        }
-        #endregion
 
         private void CollectBehaviour()
         {
@@ -124,5 +136,77 @@ namespace T4.Units.Characters
                 }
             }
         }
+        #endregion
+
+
+        private void SetBuildTarget()
+        {
+            if (target.CompareTag(TagValues.Unit))
+            {
+                if (target.TryGetComponent<BuildingManager>(out var _))
+                {
+                    MoveCharacter(target.transform.position, UnitState.FOLLOWING);
+                }
+                building = target.GetComponent<BuildingManager>().Unit as Building;
+            }
+            LastAcionTime = -1;
+            isDirty = false;
+        }
+
+        private void BuildBehaviour()
+        {
+            if (character.Unit.Data.state == UnitState.FOLLOWING)
+            {
+                if (canAct)
+                {
+                    MoveCharacter(target.transform.position, UnitState.WORKING);
+                }
+            }
+            else if (character.Unit.Data.state == UnitState.WORKING)
+            {
+                if (!canAct)
+                {
+                    LastAcionTime = -1;
+                }
+                else if (LastAcionTime < 0)
+                {
+                    LastAcionTime = Time.realtimeSinceStartup;
+                }
+                else
+                {
+                    ConstructBuild();
+                }
+            }
+        }
+
+        private void ConstructBuild()
+        {
+            float passed = Time.realtimeSinceStartup - LastAcionTime;
+            if (passed >= Data.collectionTime)
+            {
+                if (building != null && !building.Construct())
+                {
+                    LastAcionTime = Time.realtimeSinceStartup;
+                }
+                else
+                {
+                    UpdateTarget(character.gameObject, BehaviourType.NONE, UnitState.IDLE);
+                }
+            }
+        }
+
+        #region MOVE CHARACTER
+        private void MoveCharacter(Vector3 destiny, UnitState state)
+        {
+            character.Unit.Data.state = state;
+            character.MoveTo(destiny);
+        }
+
+        private void UpdateTarget(GameObject target, BehaviourType behaviour, UnitState state)
+        {
+            SetTarget(target, behaviour);
+            MoveCharacter(target.transform.position, state);
+        }
+        #endregion
     }
 }

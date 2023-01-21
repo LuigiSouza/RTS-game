@@ -66,6 +66,7 @@ namespace T4.Managers
 
             // restore the previous state
             GhostBuilding = prevPlacedBuilding;
+            EventManager.Instance.Raise(new UpdateNavMeshHandler());
         }
 
         public void SelectPlacedBuilding(UnitType type)

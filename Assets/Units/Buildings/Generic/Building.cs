@@ -67,6 +67,21 @@ namespace T4.Units.Buildings
             Renderer.materials = materials.ToArray();
         }
 
+        public bool Construct()
+        {
+            if (state != BuildingStates.PENDING) return true;
+
+            HP += 10;
+            if (HP >= MaxHP)
+            {
+                HP = MaxHP;
+                state = BuildingStates.PLACED;
+                return true;
+            }
+
+            return false;
+        }
+
         public override void Place()
         {
             base.Place();

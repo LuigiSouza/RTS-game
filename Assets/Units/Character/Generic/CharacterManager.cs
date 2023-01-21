@@ -7,7 +7,6 @@ namespace T4.Units.Characters
     [RequireComponent(typeof(NavMeshAgent))]
     public class CharacterManager : UnitManager
     {
-        [SerializeField]
         private NavMeshAgent agent;
 
         private Character character = null;
@@ -19,9 +18,10 @@ namespace T4.Units.Characters
 
         private void Awake()
         {
-            if (agent == null)
+            agent = GetComponent<NavMeshAgent>();
+            if(!agent)
             {
-                agent = GetComponent<NavMeshAgent>();
+                agent = gameObject.AddComponent<NavMeshAgent>();
             }
         }
 

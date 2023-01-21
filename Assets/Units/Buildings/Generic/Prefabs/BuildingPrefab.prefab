@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6663912118756727983}
   - component: {fileID: 1571404203817307212}
   - component: {fileID: 6267063276682328298}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BuildingPrefab
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.5, z: 0.5}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.5, z: 0}
   m_TimeToStationary: 0.5
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 8605196587972071341}
   - component: {fileID: 3235891062634866914}
   - component: {fileID: 4688554234836873044}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

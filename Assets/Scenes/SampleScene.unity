@@ -1081,7 +1081,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 9495
+    m_Bits: 58647
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1699,6 +1699,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1928727235916659682, guid: c001ab9dc03304d448aa1578a82710f6, type: 3}
+      propertyPath: remainingResources
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2834978199697065340, guid: c001ab9dc03304d448aa1578a82710f6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 18.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 2834978199697065340, guid: c001ab9dc03304d448aa1578a82710f6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 80.26
+      objectReference: {fileID: 0}
     - target: {fileID: 5636747997868638808, guid: c001ab9dc03304d448aa1578a82710f6, type: 3}
       propertyPath: m_Name
       value: Terrain

@@ -26,10 +26,12 @@ namespace T4.Resource
         {
             if (!CanExtract())
             {
-                Destroy(this);
+                Destroy(gameObject);
                 return false;
             }
             remainingResources--;
+
+            if(!CanExtract()) Destroy(gameObject);
 
             return true;
         }
