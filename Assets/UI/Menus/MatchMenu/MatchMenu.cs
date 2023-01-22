@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using T4.Units.Buildings;
 using T4.Events;
 using T4.Globals;
 using T4.Managers;
@@ -19,8 +18,6 @@ namespace T4.UI.Match.Menus
     public class MatchMenu : UIBehaviour
     {
         [SerializeField]
-        private Transform unitButtons;
-        [SerializeField]
         private UnitDetailInfo unitInfo;
         [SerializeField]
         private Transform unitAbilities;
@@ -29,9 +26,7 @@ namespace T4.UI.Match.Menus
         [Space]
 
         [SerializeField]
-        private GameObject abilityButton;
-        [SerializeField]
-        private UnitButton unitButton;
+        private SpawnButton abilityButton;
         [SerializeField]
         private Transform topBar;
         [SerializeField]
@@ -45,32 +40,38 @@ namespace T4.UI.Match.Menus
 
         private Unit selectedUnit;
 
-        private Dictionary<UnitType, UnitButton> dictButtons;
+        private Dictionary<UnitType, SpawnButton> dictButtons = new();
         private Dictionary<ResourceType, TMP_Text> ResourceTexts { get; } = new();
 
         protected override void Start()
         {
             InitializeResourcesBar();
-            InitializeBuildingMenu();
-            InitializeBuildingInfo();
+            InitializeUnitInfo();
 
-            EventManager.Instance.AddListener<ChangeResourceEventHandler>(OnUpdateResourceTexts);
-            EventManager.Instance.AddListener<ChangeResourceEventHandler>(OnCheckBuildingButtons);
-            EventManager.Instance.AddListener<ShowBuildingCostEventHandler>(OnHoverBuildingButton);
-            EventManager.Instance.AddListener<HideBuildingCostEventHandler>(OnUnhoverBuildingButton);
+            EventManager.Instance.AddListener<ChangeResourceEventHandler>(UpdateResourceTexts);
+            EventManager.Instance.AddListener<ChangeResourceEventHandler>(UpdateAbilitiesButtons);
+            EventManager.Instance.AddListener<ShowUnitCostEventHandler>(OnHoverAbilityButton);
+            EventManager.Instance.AddListener<HideUnitCostEventHandler>(OnUnhoverAbilityButton);
             EventManager.Instance.AddListener<ChangeSelectedUnitsEventHandler>(OnChangeSelectedUnits);
+            EventManager.Instance.AddListener<UpdateHealthHandler>(OnChangeHealth);
         }
 
         protected override void OnDisable()
         {
-            EventManager.Instance.RemoveListener<ChangeResourceEventHandler>(OnUpdateResourceTexts);
-            EventManager.Instance.RemoveListener<ChangeResourceEventHandler>(OnCheckBuildingButtons);
-            EventManager.Instance.RemoveListener<ShowBuildingCostEventHandler>(OnHoverBuildingButton);
-            EventManager.Instance.RemoveListener<HideBuildingCostEventHandler>(OnUnhoverBuildingButton);
+            EventManager.Instance.RemoveListener<ChangeResourceEventHandler>(UpdateResourceTexts);
+            EventManager.Instance.RemoveListener<ChangeResourceEventHandler>(UpdateAbilitiesButtons);
+            EventManager.Instance.RemoveListener<ShowUnitCostEventHandler>(OnHoverAbilityButton);
+            EventManager.Instance.RemoveListener<HideUnitCostEventHandler>(OnUnhoverAbilityButton);
             EventManager.Instance.RemoveListener<ChangeSelectedUnitsEventHandler>(OnChangeSelectedUnits);
+            EventManager.Instance.RemoveListener<UpdateHealthHandler>(OnChangeHealth);
         }
 
+        private void OnChangeHealth(UpdateHealthHandler e)
+        {
+            if (e.unit != selectedUnit.UnitManager) return;
 
+            unitInfo.SetHealthBarFill(e.hp, e.maxHp);
+        }
 
         private void InitializeResourcesBar()
         {
@@ -85,7 +86,7 @@ namespace T4.UI.Match.Menus
             }
         }
 
-        private void InitializeBuildingInfo()
+        private void InitializeUnitInfo()
         {
             if (unitCostInfoPrefab != null)
             {
@@ -96,16 +97,15 @@ namespace T4.UI.Match.Menus
 
         private void ShowInfoPanel()
         {
-            string title = selectedUnit.HP + "/" + selectedUnit.MaxHP;
-            unitInfo.SetInfo(title, selectedUnit.Data.description);
+            unitInfo.SetInfo(selectedUnit.Data.description);
             unitInfo.SetActive(true);
+            unitInfo.SetHealthBarFill(selectedUnit.HP, selectedUnit.MaxHP);
             unitOptions.Initialize(selectedUnit);
             unitOptions.SetActive(true);
         }
 
-        private void HideBuildingMenu()
+        private void HideUnitgMenu()
         {
-            unitButtons.gameObject.SetActive(false);
             unitInfo.SetActive(false);
         }
 
@@ -114,9 +114,8 @@ namespace T4.UI.Match.Menus
             unitAbilities.gameObject.SetActive(false);
         }
 
-        private void ShowBuildingMenu()
+        private void ShowUnitMenu()
         {
-            unitButtons.gameObject.SetActive(true);
             unitInfo.SetActive(false);
         }
 
@@ -128,37 +127,18 @@ namespace T4.UI.Match.Menus
             }
             if (selectedUnit.AbilityManagers.Count == 0) return;
 
-            GameObject g; Transform t; Button b;
+            SpawnButton g; Transform t; Button b;
             for (int i = 0; i < selectedUnit.AbilityManagers.Count; i++)
             {
-                AbilityManager ability = selectedUnit.AbilityManagers[i];
-                g = GameObject.Instantiate(abilityButton, unitAbilities);
+                AbilityData ability = selectedUnit.AbilityManagers[i].ability;
+                g = Instantiate(abilityButton.gameObject, unitAbilities).GetComponent<SpawnButton>();
+                g.Initialize(ability.unitReference);
                 t = g.transform;
                 b = g.GetComponent<Button>();
-                t.Find("Text").GetComponent<TMP_Text>().text = ability.ability.abilityName;
+                t.Find("Text").GetComponent<TMP_Text>().text = ability.abilityName;
                 AddUnitAbilityButtonListener(selectedUnit, b, i);
             }
             unitAbilities.gameObject.SetActive(true);
-        }
-        private void InitializeBuildingMenu()
-        {
-            dictButtons = new Dictionary<UnitType, UnitButton>();
-            for (int i = 0; i < GameManager.Instance.BUILDING_DATA.Length; i++)
-            {
-                GameObject b = Instantiate(
-                    unitButton.gameObject,
-                    unitButtons);
-                BuildingData data = GameManager.Instance.BUILDING_DATA[i];
-                unitButton = b.GetComponent<UnitButton>();
-                unitButton.Initialize(data);
-                dictButtons[data.code] = unitButton;
-                AddBuildingButtonListener(unitButton.Button, data.code);
-                if (!GameManager.Instance.BUILDING_DATA[i].CanBuy())
-                {
-                    unitButton.SetInteractable(false);
-                }
-            }
-            unitButtons.gameObject.SetActive(true);
         }
 
         private void SetResourceText(TMP_Text resourceText, int value)
@@ -171,35 +151,29 @@ namespace T4.UI.Match.Menus
             b.onClick.AddListener(() => unit.TriggerSkill(i));
         }
 
-        private void AddBuildingButtonListener(Button b, UnitType t)
-        {
-            b.onClick.AddListener(() => BuildingPlacer.Instance.SelectPlacedBuilding(t));
-        }
-
         private void OnChangeSelectedUnits(ChangeSelectedUnitsEventHandler e)
         {
             unitOptions.SetActive(false);
-            unitButtons.gameObject.SetActive(false);
             if (GameManager.Instance.SELECTED_UNITS.Count > 1)
             {
-                HideBuildingMenu();
+                HideUnitgMenu();
                 HideAbilitiesMenu();
             }
             else if (GameManager.Instance.SELECTED_UNITS.Count == 1)
             {
                 selectedUnit = GameManager.Instance.SELECTED_UNITS[0].Unit;
-                HideBuildingMenu();
+                HideUnitgMenu();
                 ShowInfoPanel();
                 InitializeAbilitiesMenu();
             }
             else
             {
-                ShowBuildingMenu();
+                ShowUnitMenu();
                 HideAbilitiesMenu();
             }
         }
 
-        private void OnUpdateResourceTexts(ChangeResourceEventHandler e)
+        private void UpdateResourceTexts(ChangeResourceEventHandler e)
         {
             foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
             {
@@ -208,21 +182,21 @@ namespace T4.UI.Match.Menus
             }
         }
 
-        private void OnCheckBuildingButtons(ChangeResourceEventHandler e)
+        private void UpdateAbilitiesButtons(ChangeResourceEventHandler e)
         {
-            foreach (BuildingData data in GameManager.Instance.BUILDING_DATA)
+            foreach (KeyValuePair<UnitType, SpawnButton> value in dictButtons)
             {
-                dictButtons[data.code].SetInteractable(data.CanBuy());
+                dictButtons[value.Key].SetInteractable();
             }
         }
 
-        private void OnHoverBuildingButton(ShowBuildingCostEventHandler e)
+        private void OnHoverAbilityButton(ShowUnitCostEventHandler e)
         {
             SetInfoPanel(e.UnitData);
             ShowInfoPanel(true);
         }
 
-        private void OnUnhoverBuildingButton(HideBuildingCostEventHandler e)
+        private void OnUnhoverAbilityButton(HideUnitCostEventHandler e)
         {
             ShowInfoPanel(false);
         }

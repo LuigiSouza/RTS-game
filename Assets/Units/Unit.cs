@@ -76,5 +76,11 @@ namespace T4.Units
         {
             return Data.CanBuy();
         }
+
+        public void TakeHit(int value)
+        {
+            HP += value;
+            EventManager.Instance.Raise(new UpdateHealthHandler(UnitManager, HP, MaxHP));
+        }
     }
 }

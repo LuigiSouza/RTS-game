@@ -53,11 +53,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7033f369322cca4580672a1bb96a0f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitButtons: {fileID: 6118425031915854082}
   unitInfo: {fileID: 5486399765897594774}
   unitAbilities: {fileID: 8157664573600939134}
   unitOptions: {fileID: 4900833328513906889}
-  abilityButton: {fileID: 8022994052239926828, guid: 1355eacd9cd01e14195d5a0d57b63d32, type: 3}
+  abilityButton: {fileID: 2745811999875563654, guid: b2c407337632c3a4fb93b9eeaf824a06, type: 3}
   unitButton: {fileID: 2745811999875563654, guid: b2c407337632c3a4fb93b9eeaf824a06, type: 3}
   topBar: {fileID: 683372288531023767}
   resourceDisplayPrefab: {fileID: 7409382272175202626, guid: 5810068189d73744080c1fb766be1802, type: 3}
@@ -481,11 +480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed047fe7febae8d46831426c26791c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &6118425031915854082 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5066002201956735668, guid: c518f35d23774bf4abc910ba8f8c7b83, type: 3}
-  m_PrefabInstance: {fileID: 1344057372855337910}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8157664573600939134 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7175032152680841160, guid: c518f35d23774bf4abc910ba8f8c7b83, type: 3}

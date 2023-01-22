@@ -33,10 +33,12 @@ namespace T4.Units.Abilities
             {
                 case AbilityType.CREATE_CHARACTER:
                     coll = source.GetComponent<BoxCollider>();
+                    float distancex = UnityEngine.Random.Range(-0.8f, 0.8f);
+                    float distancez = UnityEngine.Random.Range(-0.8f, 0.8f);
                     instantiationPosition = new Vector3(
-                        source.transform.position.x - coll.size.x * 0.7f,
+                        source.transform.position.x - coll.size.x * distancex,
                         source.transform.position.y,
-                        source.transform.position.z - coll.size.z * 0.7f
+                        source.transform.position.z - coll.size.z * distancez
                     );
                     CharacterData cd = (CharacterData)unitReference;
                     if (!cd.CanBuy()) return;

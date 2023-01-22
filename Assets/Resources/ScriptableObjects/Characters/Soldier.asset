@@ -17,6 +17,7 @@ MonoBehaviour:
   code: 3
   state: 0
   healthpoints: 100
+  strength: 0
   cost:
   - code: 0
     amount: 70
@@ -29,4 +30,4 @@ MonoBehaviour:
   resourceCapacity: 0
   resourceQuantity: 0
   resourceType: 0
-  collectionTime: 1
+  collectionTime: 3

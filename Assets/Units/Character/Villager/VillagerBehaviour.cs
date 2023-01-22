@@ -138,7 +138,7 @@ namespace T4.Units.Characters
         }
         #endregion
 
-
+        #region CONTRUCT BUILDINGS
         private void SetBuildTarget()
         {
             if (target.CompareTag(TagValues.Unit))
@@ -184,7 +184,7 @@ namespace T4.Units.Characters
             float passed = Time.realtimeSinceStartup - LastAcionTime;
             if (passed >= Data.collectionTime)
             {
-                if (building != null && !building.Construct())
+                if (building != null && !building.Construct(Data.strength))
                 {
                     LastAcionTime = Time.realtimeSinceStartup;
                 }
@@ -194,6 +194,7 @@ namespace T4.Units.Characters
                 }
             }
         }
+        #endregion
 
         #region MOVE CHARACTER
         private void MoveCharacter(Vector3 destiny, UnitState state)

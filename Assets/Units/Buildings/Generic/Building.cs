@@ -67,18 +67,18 @@ namespace T4.Units.Buildings
             Renderer.materials = materials.ToArray();
         }
 
-        public bool Construct()
+        public bool Construct(int amount)
         {
             if (state != BuildingStates.PENDING) return true;
 
-            HP += 10;
-            if (HP >= MaxHP)
+            int sum = HP + amount >= MaxHP ? MaxHP : HP + amount;
+            buildingManager.TakeHit(sum - HP);
+
+            if (sum >= MaxHP)
             {
-                HP = MaxHP;
                 state = BuildingStates.PLACED;
                 return true;
             }
-
             return false;
         }
 

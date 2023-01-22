@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9140737410937110424}
   - component: {fileID: 3998408066964302078}
   m_Layer: 5
-  m_Name: Title
+  m_Name: HealthText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed047fe7febae8d46831426c26791c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Title: {fileID: 3998408066964302078}
+  HealthText: {fileID: 3998408066964302078}
   HealthBar: {fileID: 9178499947781824025}
   Description: {fileID: 7815895164888241278}
 --- !u!114 &1205631328871635940

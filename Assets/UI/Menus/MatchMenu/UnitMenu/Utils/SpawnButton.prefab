@@ -93,7 +93,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8022994052239926828, guid: 1355eacd9cd01e14195d5a0d57b63d32, type: 3}
       propertyPath: m_Name
-      value: UnitButton
+      value: SpawnButton
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1355eacd9cd01e14195d5a0d57b63d32, type: 3}
@@ -111,6 +111,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1784218351675053792}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4829ebbefc89fe4e84f646d0054b7c8, type: 3}
+  m_Script: {fileID: 11500000, guid: b3af655ed2468a94bba06c2d8220040f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

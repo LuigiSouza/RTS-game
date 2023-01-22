@@ -83,6 +83,7 @@ MonoBehaviour:
   selectionCircle: {fileID: 7266202204767789988}
   healthBarPrefab: {fileID: 5434475975251894142, guid: f8bb5ed8653fb6b42a0595250fbb5810, type: 3}
   _fov: {fileID: 8646395115225924133}
+  agent: {fileID: 134129907246284491}
 --- !u!195 &134129907246284491
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -104,7 +105,7 @@ NavMeshAgent:
   m_Height: 1
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 1
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &7214805458348887098
 MonoBehaviour:
   m_ObjectHideFlags: 0

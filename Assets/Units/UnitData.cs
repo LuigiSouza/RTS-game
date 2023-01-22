@@ -15,6 +15,7 @@ namespace T4.Units
         public UnitType code;
         public UnitState state;
         public int healthpoints;
+        public int strength;
         public List<ResourceValue> cost;
         public List<AbilityData> abilities = new();
         public GameObject prefab;

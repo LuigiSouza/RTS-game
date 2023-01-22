@@ -3,6 +3,7 @@ using T4.Managers;
 using T4.UI.Match.Info;
 using T4.Fog;
 using UnityEngine;
+using T4.Events;
 
 namespace T4.Units
 {
@@ -125,6 +126,7 @@ namespace T4.Units
                 healthBar = healthBarObj.GetComponent<UnityHealthBar>();
                 healthBar.Initialize(transform);
                 healthBar.SetPosition();
+                healthBar.UpdateHealth(Unit.HP, Unit.MaxHP);
             }
         }
 
@@ -134,6 +136,12 @@ namespace T4.Units
             Material[] materials = transform.Find("Mesh").GetComponent<Renderer>().materials;
             materials[0].color = playerColor;
             transform.Find("Mesh").GetComponent<Renderer>().materials = materials;
+        }
+
+        public void TakeHit(int value)
+        {
+            Unit.TakeHit(value);
+            if (healthBar != null) healthBar.UpdateHealth(Unit.HP, Unit.MaxHP);
         }
     }
 }

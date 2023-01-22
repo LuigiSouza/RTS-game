@@ -32,16 +32,31 @@ namespace T4.Events
             Building = data;
         }
     }
-    public class ShowBuildingCostEventHandler : BaseEvent
+    public class ShowUnitCostEventHandler : BaseEvent
     {
         public UnitData UnitData { get; private set; }
-        public ShowBuildingCostEventHandler(UnitData data)
+        public ShowUnitCostEventHandler(UnitData data)
         {
             UnitData = data;
         }
     }
-    public class HideBuildingCostEventHandler : BaseEvent { }
+    public class HideUnitCostEventHandler : BaseEvent { }
 
     public class UpdateNavMeshHandler : BaseEvent { }
+
+    public class UpdateHealthHandler : BaseEvent
+    {
+        public int hp { get; private set; }
+        public int maxHp { get; private set; }
+        public UnitManager unit { get; private set; }
+
+        public UpdateHealthHandler(UnitManager unit, int hp, int maxHp)
+        {
+            this.hp = hp;
+            this.maxHp = maxHp;
+            this.unit = unit;
+        }
+
+    }
     #endregion
 }

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace T4.UI.Utils
 {
     [RequireComponent(typeof(Button))]
-    public class UnitButton : UIBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class SpawnButton : UIBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         public Button Button { get; private set; }
         private UnitData unitData;
@@ -23,19 +23,19 @@ namespace T4.UI.Utils
             Button.name = unitData.code.ToString();
         }
 
-        public void SetInteractable(bool interactable)
+        public void SetInteractable()
         {
-            Button.interactable = interactable;
+            Button.interactable = unitData.CanBuy();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            EventManager.Instance.Raise(new ShowBuildingCostEventHandler(unitData));
+            EventManager.Instance.Raise(new ShowUnitCostEventHandler(unitData));
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            EventManager.Instance.Raise(new HideBuildingCostEventHandler());
+            EventManager.Instance.Raise(new HideUnitCostEventHandler());
         }
     }
 }
