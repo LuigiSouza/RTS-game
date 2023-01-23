@@ -3,6 +3,7 @@ using System.Linq;
 using T4.Globals;
 using T4.Managers;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace T4.Units.Buildings
 {
@@ -28,6 +29,7 @@ namespace T4.Units.Buildings
             protected set { buildingManager = value is BuildingManager b ? b : null; }
         }
 
+        public bool IsReady { get => state == BuildingStates.PLACED; }
         public bool IsPlaced { get => state == BuildingStates.PLACED || state == BuildingStates.PENDING; }
         public bool IsValid { get => state == BuildingStates.VALID; }
 
@@ -88,6 +90,7 @@ namespace T4.Units.Buildings
 
             _transform.GetComponent<BoxCollider>().isTrigger = false;
             _transform.GetComponent<UnitManager>().FOV.DisableFov();
+            _transform.GetComponent<NavMeshObstacle>().enabled = true;
 
             state = BuildingStates.PENDING;
             HP = 1;
@@ -113,6 +116,12 @@ namespace T4.Units.Buildings
             state = buildingManager.CheckPlacement()
                 ? BuildingStates.VALID
                 : BuildingStates.INVALID;
+        }
+
+        public override void TakeHit(int value)
+        {
+            base.TakeHit(value);
+            CheckValidPlacement();
         }
     }
 }

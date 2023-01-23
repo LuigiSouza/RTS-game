@@ -23,6 +23,7 @@ namespace T4.Units
 
 
         protected List<AbilityManager> abilitiesManagers;
+        public List<AbilityManager> AbilityManagers { get => abilitiesManagers; }
 
         public Unit(UnitData data, int owner)
         {
@@ -44,12 +45,6 @@ namespace T4.Units
                 abilitiesManagers.Add(sm);
             }
         }
-        public void TriggerSkill(int index, GameObject target = null)
-        {
-            abilitiesManagers[index].Trigger(target);
-        }
-        public List<AbilityManager> AbilityManagers { get => abilitiesManagers; }
-
 
         public void SetPosition(Vector3 position)
         {
@@ -77,7 +72,7 @@ namespace T4.Units
             return Data.CanBuy();
         }
 
-        public void TakeHit(int value)
+        public virtual void TakeHit(int value)
         {
             HP += value;
             EventManager.Instance.Raise(new UpdateHealthHandler(UnitManager, HP, MaxHP));

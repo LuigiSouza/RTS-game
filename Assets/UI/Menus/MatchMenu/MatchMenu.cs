@@ -12,6 +12,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using T4.Units.Abilities;
 using System;
+using T4.Units.Buildings;
 
 namespace T4.UI.Match.Menus
 {
@@ -40,7 +41,7 @@ namespace T4.UI.Match.Menus
 
         private Unit selectedUnit;
 
-        private Dictionary<UnitType, SpawnButton> dictButtons = new();
+        private List<SpawnButton> dictButtons = new();
         private Dictionary<ResourceType, TMP_Text> ResourceTexts { get; } = new();
 
         protected override void Start()
@@ -104,7 +105,11 @@ namespace T4.UI.Match.Menus
             unitOptions.SetActive(true);
         }
 
-        private void HideUnitgMenu()
+        private void HideUnitMenu()
+        {
+            unitInfo.SetActive(false);
+        }
+        private void ShowUnitMenu()
         {
             unitInfo.SetActive(false);
         }
@@ -114,31 +119,39 @@ namespace T4.UI.Match.Menus
             unitAbilities.gameObject.SetActive(false);
         }
 
-        private void ShowUnitMenu()
+        private void ShowAbilitiesMenu()
         {
-            unitInfo.SetActive(false);
+            unitAbilities.gameObject.SetActive(true);
         }
 
         private void InitializeAbilitiesMenu()
         {
+            dictButtons.Clear();
             foreach (Transform child in unitAbilities)
             {
                 Destroy(child.gameObject);
             }
-            if (selectedUnit.AbilityManagers.Count == 0) return;
+            if (selectedUnit is Building && !(selectedUnit as Building).IsReady ||
+                selectedUnit.AbilityManagers.Count == 0 ||
+                selectedUnit.Owner != GameManager.Instance.PlayerId)
+            {
+                HideAbilitiesMenu();
+                return;
+            }
 
             SpawnButton g; Transform t; Button b;
             for (int i = 0; i < selectedUnit.AbilityManagers.Count; i++)
             {
                 AbilityData ability = selectedUnit.AbilityManagers[i].ability;
                 g = Instantiate(abilityButton.gameObject, unitAbilities).GetComponent<SpawnButton>();
-                g.Initialize(ability.unitReference);
-                t = g.transform;
-                b = g.GetComponent<Button>();
+                g.Initialize(ability.unitReference); g.SetInteractable();
+                t = g.transform; b = g.GetComponent<Button>();
                 t.Find("Text").GetComponent<TMP_Text>().text = ability.abilityName;
                 AddUnitAbilityButtonListener(selectedUnit, b, i);
+                dictButtons.Add(g);
             }
-            unitAbilities.gameObject.SetActive(true);
+
+            ShowAbilitiesMenu();
         }
 
         private void SetResourceText(TMP_Text resourceText, int value)
@@ -148,7 +161,7 @@ namespace T4.UI.Match.Menus
 
         private void AddUnitAbilityButtonListener(Unit unit, Button b, int i)
         {
-            b.onClick.AddListener(() => unit.TriggerSkill(i));
+            b.onClick.AddListener(() => unit.UnitManager.TriggerSkill(i));
         }
 
         private void OnChangeSelectedUnits(ChangeSelectedUnitsEventHandler e)
@@ -156,13 +169,13 @@ namespace T4.UI.Match.Menus
             unitOptions.SetActive(false);
             if (GameManager.Instance.SELECTED_UNITS.Count > 1)
             {
-                HideUnitgMenu();
+                HideUnitMenu();
                 HideAbilitiesMenu();
             }
             else if (GameManager.Instance.SELECTED_UNITS.Count == 1)
             {
                 selectedUnit = GameManager.Instance.SELECTED_UNITS[0].Unit;
-                HideUnitgMenu();
+                HideUnitMenu();
                 ShowInfoPanel();
                 InitializeAbilitiesMenu();
             }
@@ -184,9 +197,9 @@ namespace T4.UI.Match.Menus
 
         private void UpdateAbilitiesButtons(ChangeResourceEventHandler e)
         {
-            foreach (KeyValuePair<UnitType, SpawnButton> value in dictButtons)
+            foreach (SpawnButton value in dictButtons)
             {
-                dictButtons[value.Key].SetInteractable();
+                value.SetInteractable();
             }
         }
 

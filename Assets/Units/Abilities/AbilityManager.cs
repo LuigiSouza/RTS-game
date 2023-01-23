@@ -6,8 +6,10 @@ namespace T4.Units.Abilities
     public class AbilityManager : MonoBehaviour
     {
         public AbilityData ability;
-        GameObject source;
-        bool isReady = true;
+        public bool Succeed { get; private set; } = false;
+
+        private GameObject source;
+        private bool isReady = true;
 
         public void Initialize(AbilityData ability, GameObject source)
         {
@@ -15,24 +17,28 @@ namespace T4.Units.Abilities
             this.source = source;
         }
 
-        public void Trigger(GameObject target = null)
+        public IEnumerator Trigger(GameObject target = null)
         {
-            if (!isReady) return;
-            StartCoroutine(WrappedTrigger(target));
+            if (isReady) yield return StartCoroutine(WrappedTrigger(target));
         }
 
         private IEnumerator WrappedTrigger(GameObject target)
         {
-            yield return new WaitForSeconds(ability.castTime);
-            ability.Trigger(source, target);
             SetReady(false);
             yield return new WaitForSeconds(ability.castTime);
+            SetSuccess(ability.Trigger(source, target));
             SetReady(true);
+            yield return null;
         }
 
         private void SetReady(bool ready)
         {
             isReady = ready;
+        }
+
+        private void SetSuccess(bool succeed)
+        {
+            this.Succeed = succeed;
         }
     }
 }

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1da9b4f25ab91804c8bea67540449f5d, type: 3}
   m_Name: BuildQuarter
   m_EditorClassIdentifier: 
-  code: 
-  abilityName: 
-  description: 
-  type: 0
-  unitReference: {fileID: 0}
+  code: build_quarter
+  abilityName: Build Quarter
+  description: Build a quarter
+  type: 1
+  unitReference: {fileID: 11400000, guid: 913c8f45bf9da384abbe4cc09c648ff1, type: 2}
   castTime: 0
   sprite: {fileID: 0}

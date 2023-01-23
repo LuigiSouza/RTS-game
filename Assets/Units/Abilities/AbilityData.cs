@@ -24,7 +24,7 @@ namespace T4.Units.Abilities
         public float castTime;
         public Sprite sprite;
 
-        public void Trigger(GameObject source, GameObject target = null)
+        public bool Trigger(GameObject source, GameObject target = null)
         {
             Vector3 instantiationPosition;
             BoxCollider coll;
@@ -41,13 +41,13 @@ namespace T4.Units.Abilities
                         source.transform.position.z - coll.size.z * distancez
                     );
                     CharacterData cd = (CharacterData)unitReference;
-                    if (!cd.CanBuy()) return;
+                    if (!cd.CanBuy()) return false;
 
                     sourceUnitManager = source.GetComponent<UnitManager>();
                     if (sourceUnitManager == null)
                     {
                         Debug.LogError($"Não foi encontrado o componente {typeof(UnitManager)}");
-                        return;
+                        return false;
                     }
 
 
@@ -61,6 +61,8 @@ namespace T4.Units.Abilities
                 default:
                     throw new NotImplementedException("Ação inválida.");
             }
+
+            return true;
         }
     }
 }

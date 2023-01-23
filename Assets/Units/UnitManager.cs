@@ -4,6 +4,9 @@ using T4.UI.Match.Info;
 using T4.Fog;
 using UnityEngine;
 using T4.Events;
+using System;
+using System.Collections;
+using T4.Units.Abilities;
 
 namespace T4.Units
 {
@@ -28,6 +31,8 @@ namespace T4.Units
         protected BoxCollider _collider;
         public virtual Unit Unit { get; protected set; }
         public UnitData Data { get { return Unit.Data; } }
+
+        private bool isUsingAbility = false;
 
         private void Awake()
         {
@@ -142,6 +147,33 @@ namespace T4.Units
         {
             Unit.TakeHit(value);
             if (healthBar != null) healthBar.UpdateHealth(Unit.HP, Unit.MaxHP);
+        }
+
+        private List<Tuple<int, GameObject>> queueSkill = new();
+
+        public void TriggerSkill(int index, GameObject target = null)
+        {
+            queueSkill.Add(new Tuple<int, GameObject>(index, target));
+            if (!isUsingAbility) StartCoroutine(QueueHandler());
+        }
+
+        private IEnumerator QueueHandler()
+        {
+            SetUsingAbility(true);
+            yield return null;
+            while (queueSkill.Count > 0)
+            {
+                Tuple<int, GameObject> value = queueSkill[0]; queueSkill.RemoveAt(0);
+                AbilityManager ability = Unit.AbilityManagers[value.Item1];
+                yield return ability.Trigger(value.Item2);
+                if (!ability.Succeed) queueSkill.RemoveAll(e => e.Item1 == value.Item1);
+            }
+            SetUsingAbility(false);
+            yield return null;
+        }
+        private void SetUsingAbility(bool isUsing)
+        {
+            isUsingAbility = isUsing;
         }
     }
 }

@@ -18,7 +18,8 @@ namespace T4.Units.Characters
             }
             else if (Physics.Raycast(_ray, out _raycastHit, 1000f, LayerMaskValues.BuildingLayer))
             {
-                behaviour.SetTarget(_raycastHit.transform.gameObject, BehaviourType.BUILD);
+                Building objectHit = _raycastHit.transform.GetComponent<BuildingManager>().Unit as Building;
+                if (objectHit.IsPlaced) behaviour.SetTarget(_raycastHit.transform.gameObject, BehaviourType.BUILD);
             }
             else
             {
