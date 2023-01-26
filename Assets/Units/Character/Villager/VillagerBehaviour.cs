@@ -195,19 +195,5 @@ namespace T4.Units.Characters
             }
         }
         #endregion
-
-        #region MOVE CHARACTER
-        private void MoveCharacter(Vector3 destiny, UnitState state)
-        {
-            character.Unit.Data.state = state;
-            character.MoveTo(destiny);
-        }
-
-        private void UpdateTarget(GameObject target, BehaviourType behaviour, UnitState state)
-        {
-            SetTarget(target, behaviour);
-            MoveCharacter(target.transform.position, state);
-        }
-        #endregion
     }
 }

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7289644361509594437}
   - component: {fileID: 134129907246284491}
   - component: {fileID: 7214805458348887098}
-  m_Layer: 15
+  m_Layer: 14
   m_Name: CharacterPrefab
   m_TagString: Unit
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 8605196587972071341}
   - component: {fileID: 3235891062634866914}
   - component: {fileID: 4688554234836873044}
-  m_Layer: 15
+  m_Layer: 14
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

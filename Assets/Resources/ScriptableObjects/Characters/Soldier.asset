@@ -17,7 +17,7 @@ MonoBehaviour:
   code: 3
   state: 0
   healthpoints: 100
-  strength: 0
+  strength: 30
   cost:
   - code: 0
     amount: 70

@@ -1,5 +1,6 @@
 using System;
 using T4.Globals;
+using T4.Managers;
 using T4.Units.Buildings;
 using UnityEngine;
 
@@ -16,9 +17,11 @@ namespace T4.Units.Characters
             {
                 behaviour.SetTarget(_raycastHit.transform.gameObject, BehaviourType.COLLECT);
             }
-            else if (Physics.Raycast(_ray, out _raycastHit, 1000f, LayerMaskValues.BuildingLayer))
+            else if (Physics.Raycast(_ray, out _raycastHit, 1000f, LayerMaskValues.UnitLayer))
             {
-                Building objectHit = _raycastHit.transform.GetComponent<BuildingManager>().Unit as Building;
+                UnitManager unitManager = _raycastHit.transform.GetComponent<UnitManager>();
+                if (!(unitManager is BuildingManager) || unitManager.Unit.Owner != GameManager.Instance.PlayerId) return;
+                Building objectHit = unitManager.Unit as Building;
                 if (objectHit.IsPlaced) behaviour.SetTarget(_raycastHit.transform.gameObject, BehaviourType.BUILD);
             }
             else

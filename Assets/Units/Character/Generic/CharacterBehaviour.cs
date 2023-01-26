@@ -62,5 +62,19 @@ namespace T4.Units.Characters
             if (colliding.Contains(target)) { canAct = true; }
             else { isDirty = true; canAct = false; }
         }
+
+        #region MOVE CHARACTER
+        protected void MoveCharacter(Vector3 destiny, UnitState state)
+        {
+            character.Unit.Data.state = state;
+            character.MoveTo(destiny);
+        }
+
+        protected void UpdateTarget(GameObject target, BehaviourType behaviour, UnitState state)
+        {
+            SetTarget(target, behaviour);
+            MoveCharacter(target.transform.position, state);
+        }
+        #endregion
     }
 }

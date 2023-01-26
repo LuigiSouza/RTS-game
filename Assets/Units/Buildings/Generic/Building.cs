@@ -78,7 +78,7 @@ namespace T4.Units.Buildings
 
             if (sum >= MaxHP)
             {
-                state = BuildingStates.PLACED;
+                buildingManager.FOV.EnableFov();
                 return true;
             }
             return false;
@@ -111,6 +111,8 @@ namespace T4.Units.Buildings
 
         public void CheckValidPlacement()
         {
+            if (HP == MaxHP && state == BuildingStates.PENDING) state = BuildingStates.PLACED;
+
             if (IsPlaced) return;
 
             state = buildingManager.CheckPlacement()
