@@ -9,13 +9,14 @@ namespace T4.Units.Characters
 {
     public class VillagerBehaviour : CharacterBehaviour
     {
-        private GameResource resource;
-        private Building building;
+        public GameResource Resource { get; private set; }
+        public Building Building { get; private set; }
 
         protected override void FixedUpdate()
         {
             if (behaviourTarget == BehaviourType.NONE)
             {
+                Resource = null; Building = null;
                 base.FixedUpdate();
                 return;
             }
@@ -69,7 +70,7 @@ namespace T4.Units.Characters
             float passed = Time.realtimeSinceStartup - LastAcionTime;
             if (passed >= Data.collectionTime)
             {
-                if (resource && resource.Extract())
+                if (Resource && Resource.Extract())
                 {
                     Data.resourceQuantity += 1;
                     LastAcionTime = Time.realtimeSinceStartup;
@@ -79,7 +80,7 @@ namespace T4.Units.Characters
                     UpdateTarget(GameManager.Instance.PlayerCastles[Data.owner].Transform.gameObject, BehaviourType.COLLECT, UnitState.RETURNING);
                 }
             }
-            if (Data.resourceQuantity >= Data.resourceCapacity || resource == null)
+            if (Data.resourceQuantity >= Data.resourceCapacity || Resource == null)
             {
                 UpdateTarget(GameManager.Instance.PlayerCastles[Data.owner].Transform.gameObject, BehaviourType.COLLECT, UnitState.RETURNING);
                 LastAcionTime = Time.realtimeSinceStartup;
@@ -92,11 +93,11 @@ namespace T4.Units.Characters
             if (1 << target.layer == LayerMaskValues.ResourceVeinLayer)
             {
                 MoveCharacter(target.transform.position, UnitState.FOLLOWING);
-                resource = target.GetComponent<GameResource>();
-                if (Data.resourceType != resource.Type)
+                Resource = target.GetComponent<GameResource>();
+                if (Data.resourceType != Resource.Type)
                 {
                     Data.resourceQuantity = 0;
-                    Data.resourceType = resource.Type;
+                    Data.resourceType = Resource.Type;
                 }
 
             }
@@ -147,7 +148,7 @@ namespace T4.Units.Characters
                 {
                     MoveCharacter(target.transform.position, UnitState.FOLLOWING);
                 }
-                building = target.GetComponent<BuildingManager>().Unit as Building;
+                Building = target.GetComponent<BuildingManager>().Unit as Building;
             }
             LastAcionTime = -1;
             isDirty = false;
@@ -184,7 +185,7 @@ namespace T4.Units.Characters
             float passed = Time.realtimeSinceStartup - LastAcionTime;
             if (passed >= Data.collectionTime)
             {
-                if (building != null && !building.Construct(Data.strength))
+                if (Building != null && !Building.Construct(Data.strength))
                 {
                     LastAcionTime = Time.realtimeSinceStartup;
                 }

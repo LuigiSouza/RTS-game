@@ -68,6 +68,7 @@ namespace T4.Managers
             Vector3 playerPos = new(15, 0, 75);
             Vector3 enemyPos = new(180, 0, 110);
             BuildingPlacer.Instance.SpawnBuilding(BuildingDataBuilder.Castle, CpuId, enemyPos);
+            BuildingPlacer.Instance.SpawnBuilding(BuildingDataBuilder.Quarter, CpuId, enemyPos + new Vector3(10,0,10));
             BuildingPlacer.Instance.SpawnBuilding(BuildingDataBuilder.Castle, PlayerId, playerPos);
             EventManager.Instance.Raise(new MoveCameraEventHandler(playerPos));
 

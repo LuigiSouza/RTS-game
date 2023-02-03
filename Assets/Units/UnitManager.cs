@@ -34,7 +34,7 @@ namespace T4.Units
 
         private bool isUsingAbility = false;
 
-        public bool CastingAbility { get => isUsingAbility }
+        public bool CastingAbility { get => isUsingAbility; }
 
         private void Awake()
         {
@@ -50,7 +50,7 @@ namespace T4.Units
 
         private void OnMouseDown()
         {
-            if (IsActive() && IsPlayersUnit())
+            if (IsActive())
             {
                 Select(true, Input.GetKey(KeyCode.LeftShift));
             }

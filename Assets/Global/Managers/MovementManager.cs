@@ -44,7 +44,7 @@ namespace T4.Managers
             {
                 foreach (UnitManager um in GameManager.Instance.SELECTED_UNITS)
                 {
-                    if (um.GetType() == typeof(CharacterManager))
+                    if (um.GetType() == typeof(CharacterManager) && um.Data.owner == GameManager.Instance.PlayerId)
                     {
                         ((CharacterManager)um).MoveTo(_raycastHit.point);
                     }

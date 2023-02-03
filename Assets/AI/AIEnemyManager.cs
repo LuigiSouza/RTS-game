@@ -22,8 +22,11 @@ namespace T4.AI.Enemy
 
         private int ID;
 
-        private const int UNITS_PER_RESOURCE = 3;
+        [SerializeField, Min(3)]
+        private int UNITS_PER_RESOURCE = 3;
         private List<CharacterManager> unitsWorking = new();
+
+        private List<CharacterManager> idleWorkers = new();
 
         void Start()
         {
@@ -31,8 +34,8 @@ namespace T4.AI.Enemy
 
             ID = GameManager.Instance.CpuId;
 
-            Quarter = GameManager.Instance.USER_UNITS[ID].First(b => b.Data.code == UnitType.QUARTER).UnitManager as BuildingManager;
-            Castle = GameManager.Instance.USER_UNITS[ID].First(b => b.Data.code == UnitType.CASTLE).UnitManager as BuildingManager;
+            Quarter = GameManager.Instance.USER_UNITS[ID].AsEnumerable().First(b => b.Data.code == UnitType.QUARTER).UnitManager as BuildingManager;
+            Castle = GameManager.Instance.USER_UNITS[ID].AsEnumerable().First(b => b.Data.code == UnitType.CASTLE).UnitManager as BuildingManager;
         }
 
         void FixedUpdate()
@@ -41,8 +44,8 @@ namespace T4.AI.Enemy
             List<CharacterManager> newList = new(unitsWorking);
             foreach (CharacterManager unit in unitsWorking)
             {
-                GameObject target = unit.GetComponent<CharacterBehaviour>().Target;
-                if (target.TryGetComponent<GameResource>(out GameResource res))
+                GameResource res = unit.GetComponent<VillagerBehaviour>().Resource;
+                if (res != null)
                 {
                     switch (res.Type)
                     {
@@ -66,8 +69,55 @@ namespace T4.AI.Enemy
             }
             unitsWorking = newList;
 
-            if (foodWorkers < UNITS_PER_RESOURCE) { }
-            else if (goldWorkers < UNITS_PER_RESOURCE) { }
+            idleWorkers = GetIdleWorkers();
+            SendUnitsToCollect(foodWorkers, foodResources);
+            SendUnitsToCollect(goldWorkers, goldResources);
+
+            if (GameManager.Instance.USER_CHARACTERS[ID].Count < 2 * UNITS_PER_RESOURCE && !Castle.CastingAbility)
+            {
+                Castle.TriggerSkill(0);
+            }
+        }
+
+        private void SendUnitsToCollect(int workers, List<GameResource> resourceList)
+        {
+            if (workers < UNITS_PER_RESOURCE)
+            {
+                GameResource closestResource = GetClosestResource(resourceList);
+                while (workers < UNITS_PER_RESOURCE && idleWorkers.Count > 0 && closestResource != null)
+                {
+                    CharacterManager cm = idleWorkers[0]; idleWorkers.RemoveAt(0);
+                    cm.GetComponent<VillagerBehaviour>().SetTarget(closestResource.gameObject, BehaviourType.COLLECT);
+                    unitsWorking.Add(cm);
+                    workers++;
+                }
+            }
+        }
+
+        private GameResource GetClosestResource(List<GameResource> resourceList)
+        {
+            GameResource gMin = null;
+            float minDist = Mathf.Infinity;
+            Vector3 currentPos = Castle.transform.position;
+            foreach (GameResource res in resourceList)
+            {
+                Transform t = res.gameObject.transform;
+                float dist = Vector3.Distance(t.position, currentPos);
+                if (dist < minDist)
+                {
+                    gMin = res;
+                    minDist = dist;
+                }
+            }
+            return gMin;
+        }
+
+        private List<CharacterManager> GetIdleWorkers()
+        {
+            return GameManager.Instance.USER_CHARACTERS[ID]
+                .Where(c => c.Data.state == UnitState.IDLE)
+                .Select(c => c.UnitManager as CharacterManager)
+                .ToList();
         }
 
         private void LocateResources()
