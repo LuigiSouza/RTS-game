@@ -25,7 +25,9 @@ namespace T4.Units.Characters
         protected HashSet<GameObject> colliding = new();
 
         public float LastAcionTime { get; protected set; }
+        public UnitState CurrentState { get { return character.Data.state; } }
         public CharacterData Data { get { return (CharacterData)character.Data; } }
+        public GameObject Target { get => target; }
 
         private void Start()
         {
@@ -34,11 +36,11 @@ namespace T4.Units.Characters
 
         protected virtual void FixedUpdate()
         {
-            character.Unit.Data.state = UnitState.IDLE;
+            character.Data.state = UnitState.IDLE;
 
             if (character.IsMoving())
             {
-                character.Unit.Data.state = UnitState.MOVING;
+                character.Data.state = UnitState.MOVING;
             }
         }
 
@@ -66,7 +68,7 @@ namespace T4.Units.Characters
         #region MOVE CHARACTER
         protected void MoveCharacter(Vector3 destiny, UnitState state)
         {
-            character.Unit.Data.state = state;
+            character.Data.state = state;
             character.MoveTo(destiny);
         }
 

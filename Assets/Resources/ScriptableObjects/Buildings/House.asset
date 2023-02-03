@@ -17,10 +17,11 @@ MonoBehaviour:
   code: 0
   state: 0
   healthpoints: 500
+  strength: 0
   cost:
   - code: 1
     amount: 100
   abilities: []
   prefab: {fileID: 9011176396266100239, guid: b6153094070ca9e4a95f7d127c9510be, type: 3}
-  fieldOfView: 17
+  fieldOfView: 13
   owner: 0

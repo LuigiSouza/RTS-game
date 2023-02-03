@@ -89,7 +89,7 @@ namespace T4.Units.Buildings
             base.Place();
 
             _transform.GetComponent<BoxCollider>().isTrigger = false;
-            _transform.GetComponent<UnitManager>().FOV.DisableFov();
+            //_transform.GetComponent<UnitManager>().FOV.DisableFov();
             _transform.GetComponent<NavMeshObstacle>().enabled = true;
 
             state = BuildingStates.PENDING;

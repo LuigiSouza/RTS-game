@@ -8,7 +8,7 @@ TagManager:
   - Unit
   - Obstacles
   - ResourceRange
-  - ResourceVeil
+  - ResourceVein
   layers:
   - Default
   - TransparentFX
@@ -23,7 +23,7 @@ TagManager:
   - Obstacles
   - FlatTerrain
   - MiniMap
-  - ResourceVeil
+  - ResourceVein
   - Unit
   - 
   - 

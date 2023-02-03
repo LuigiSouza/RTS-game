@@ -17,6 +17,7 @@ MonoBehaviour:
   code: 2
   state: 0
   healthpoints: 1000
+  strength: 0
   cost:
   - code: 1
     amount: 100
@@ -25,5 +26,5 @@ MonoBehaviour:
   abilities:
   - {fileID: 11400000, guid: feb4803ff4a51b74e88e1abf9be5da88, type: 2}
   prefab: {fileID: 9011176396266100239, guid: 4e1675c0219975449b13e598b5bfbf2e, type: 3}
-  fieldOfView: 20
+  fieldOfView: 17
   owner: 0

@@ -1,5 +1,4 @@
 
-using System.Collections.Generic;
 using T4.Managers;
 
 namespace T4.Units.Characters

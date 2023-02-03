@@ -13,7 +13,7 @@ namespace T4.Units.Characters
             Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit _raycastHit;
 
-            if (Physics.Raycast(_ray, out _raycastHit, 1000f, LayerMaskValues.ResourceVeilLayer))
+            if (Physics.Raycast(_ray, out _raycastHit, 1000f, LayerMaskValues.ResourceVeinLayer))
             {
                 behaviour.SetTarget(_raycastHit.transform.gameObject, BehaviourType.COLLECT);
             }

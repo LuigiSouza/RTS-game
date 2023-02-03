@@ -34,6 +34,8 @@ namespace T4.Units
 
         private bool isUsingAbility = false;
 
+        public bool CastingAbility { get => isUsingAbility }
+
         private void Awake()
         {
             canvas = GameObject.Find("Canvas").transform;
@@ -174,6 +176,12 @@ namespace T4.Units
         private void SetUsingAbility(bool isUsing)
         {
             isUsingAbility = isUsing;
+        }
+
+        public virtual void Kill()
+        {
+            GameManager.Instance.USER_UNITS[Data.owner].Remove(Unit);
+            Destroy(gameObject);
         }
     }
 }

@@ -8,7 +8,6 @@ using T4.Units;
 using UnityEngine;
 using T4.Units.Characters;
 using T4.Player;
-using System;
 using System.Linq;
 
 namespace T4.Managers
@@ -92,9 +91,9 @@ namespace T4.Managers
         {
             GAME_RESOURCES.Add(PlayerId, new()
             {
-                { ResourceType.FOOD, new Resource.Resource(ResourceType.FOOD, 200) },
-                { ResourceType.STONE, new Resource.Resource(ResourceType.STONE, 200) },
-                { ResourceType.GOLD, new Resource.Resource(ResourceType.GOLD, 200) },
+                { ResourceType.FOOD, new Resource.Resource(ResourceType.FOOD, 2000) },
+                { ResourceType.STONE, new Resource.Resource(ResourceType.STONE, 2000) },
+                { ResourceType.GOLD, new Resource.Resource(ResourceType.GOLD, 2000) },
             });
             GAME_RESOURCES.Add(CpuId, new()
             {

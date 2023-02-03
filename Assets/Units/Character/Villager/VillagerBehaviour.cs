@@ -89,7 +89,7 @@ namespace T4.Units.Characters
 
         private void SetResourceTarget()
         {
-            if (1 << target.layer == LayerMaskValues.ResourceVeilLayer)
+            if (1 << target.layer == LayerMaskValues.ResourceVeinLayer)
             {
                 MoveCharacter(target.transform.position, UnitState.FOLLOWING);
                 resource = target.GetComponent<GameResource>();
@@ -106,14 +106,14 @@ namespace T4.Units.Characters
 
         private void CollectBehaviour()
         {
-            if (character.Unit.Data.state == UnitState.FOLLOWING)
+            if (character.Data.state == UnitState.FOLLOWING)
             {
                 if (canAct)
                 {
                     MoveCharacter(target.transform.position, UnitState.WORKING);
                 }
             }
-            else if (character.Unit.Data.state == UnitState.WORKING)
+            else if (character.Data.state == UnitState.WORKING)
             {
                 if (!canAct)
                 {
@@ -128,7 +128,7 @@ namespace T4.Units.Characters
                     ProduceResources();
                 }
             }
-            else if (character.Unit.Data.state == UnitState.RETURNING)
+            else if (character.Data.state == UnitState.RETURNING)
             {
                 if (canAct)
                 {
@@ -155,14 +155,14 @@ namespace T4.Units.Characters
 
         private void BuildBehaviour()
         {
-            if (character.Unit.Data.state == UnitState.FOLLOWING)
+            if (character.Data.state == UnitState.FOLLOWING)
             {
                 if (canAct)
                 {
                     MoveCharacter(target.transform.position, UnitState.WORKING);
                 }
             }
-            else if (character.Unit.Data.state == UnitState.WORKING)
+            else if (character.Data.state == UnitState.WORKING)
             {
                 if (!canAct)
                 {

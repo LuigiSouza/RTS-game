@@ -9,5 +9,6 @@ namespace T4.Globals
         public static string Obstacles { get; } = "Obstacles";
 
         public static string ResourceRange { get; } = "ResourceRange";
+        public static string ResourceVein { get; } = "ResourceVein";
     }
 }

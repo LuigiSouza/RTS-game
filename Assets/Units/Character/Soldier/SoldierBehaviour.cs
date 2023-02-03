@@ -49,7 +49,7 @@ namespace T4.Units.Characters
 
         private void AttackBehaviour()
         {
-            if (character.Unit.Data.state == UnitState.FOLLOWING)
+            if (character.Data.state == UnitState.FOLLOWING)
             {
                 if (canAct)
                 {
@@ -60,7 +60,7 @@ namespace T4.Units.Characters
                     MoveCharacter(target.transform.position, UnitState.FOLLOWING);
                 }
             }
-            else if (character.Unit.Data.state == UnitState.ATTTACKING)
+            else if (character.Data.state == UnitState.ATTTACKING)
             {
                 if (!canAct)
                 {
