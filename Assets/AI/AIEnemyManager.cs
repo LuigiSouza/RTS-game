@@ -26,8 +26,8 @@ namespace T4.AI.Enemy
         private int UnitsPerResource = 1;
         [SerializeField, Min(0)]
         private int UnitsToAttack = 1;
-        private List<CharacterManager> unitsWorking = new();
 
+        private List<CharacterManager> unitsWorking = new();
         private List<CharacterManager> idleWorkers = new();
 
         void Start()
@@ -73,15 +73,15 @@ namespace T4.AI.Enemy
 
             idleWorkers = GetIdleWorkers();
             SendUnitsToCollect(foodWorkers, ref foodResources);
-            // SendUnitsToCollect(goldWorkers, ref goldResources);
+            SendUnitsToCollect(goldWorkers, ref goldResources);
 
-            if (CountUnitType(UnitType.VILLAGER) < 1 * UnitsPerResource && !Castle.CastingAbility)
+            if (CountUnitType(UnitType.VILLAGER) < 2 * UnitsPerResource)
             {
-                Castle.TriggerSkill(0);
+                if(!Castle.CastingAbility) Castle.TriggerSkill(0);
             }
             else if (CountUnitType(UnitType.SOLDIER) < UnitsToAttack)
             {
-                Quarter.TriggerSkill(0);
+                if(!Quarter.CastingAbility) Quarter.TriggerSkill(0);
             }
             else
             {

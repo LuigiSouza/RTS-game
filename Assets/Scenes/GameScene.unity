@@ -152,7 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad4a2c35058927c4ba0a22837395cc24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UNITS_PER_RESOURCE: 1
+  UnitsPerResource: 3
+  UnitsToAttack: 10
 --- !u!4 &46884761
 Transform:
   m_ObjectHideFlags: 0
@@ -1471,14 +1472,6 @@ PrefabInstance:
     - target: {fileID: 2834978199697065340, guid: c001ab9dc03304d448aa1578a82710f6, type: 3}
       propertyPath: m_LocalPosition.z
       value: 80.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 4327433095680718177, guid: c001ab9dc03304d448aa1578a82710f6, type: 3}
-      propertyPath: remainingResources
-      value: 505
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511134350208911333, guid: c001ab9dc03304d448aa1578a82710f6, type: 3}
-      propertyPath: remainingResources
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5636747997868638808, guid: c001ab9dc03304d448aa1578a82710f6, type: 3}
       propertyPath: m_Name
