@@ -17,7 +17,8 @@ MonoBehaviour:
   code: 1
   state: 0
   healthpoints: 1000
-  strength: 0
+  strength: 100
+  actionTime: 1
   cost:
   - code: 0
     amount: 0

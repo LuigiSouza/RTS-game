@@ -1,14 +1,15 @@
 
+using UnityEngine;
+using System;
 using System.Collections.Generic;
+using T4.Events;
+using T4.Fog;
 using T4.Managers;
 using T4.Units.Abilities;
-using T4.Fog;
-using UnityEngine;
-using T4.Events;
 
 namespace T4.Units
 {
-    public class Unit
+    public class Unit : IDisposable
     {
         protected Transform _transform;
         public virtual UnitManager UnitManager { get; protected set; }
@@ -32,7 +33,7 @@ namespace T4.Units
             HP = data.healthpoints;
             Uid = System.Guid.NewGuid().ToString();
 
-            GameObject g = Object.Instantiate(Data.prefab);
+            GameObject g = GameObject.Instantiate(Data.prefab);
             _transform = g.transform;
             UnitManager = _transform.GetComponent<UnitManager>();
             UnitManager.Initialize(this);
@@ -77,6 +78,12 @@ namespace T4.Units
             HP += value;
             UnitManager.UpdateHealthBar();
             EventManager.Instance.Raise(new UpdateHealthHandler(UnitManager, HP, MaxHP));
+            if(HP <= 0) UnitManager.Kill();
+        }
+
+        public virtual void Dispose()
+        {
+            GameManager.Instance.USER_UNITS[Owner].Remove(this);
         }
     }
 }

@@ -12,7 +12,6 @@ namespace T4.Units.Characters
         public int resourceCapacity;
         public int resourceQuantity;
         public ResourceType resourceType;
-        public float collectionTime;
 
         public CharacterData(int owner) : base(owner)
         {

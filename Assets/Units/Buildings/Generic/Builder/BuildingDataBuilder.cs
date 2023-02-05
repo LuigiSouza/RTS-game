@@ -17,7 +17,6 @@ namespace T4.Units.Buildings
             House = Resources.Load<BuildingData>("ScriptableObjects/Buildings/House");
             Quarter = Resources.Load<BuildingData>("ScriptableObjects/Buildings/Quarter");
             Castle = Resources.Load<BuildingData>("ScriptableObjects/Buildings/Castle");
-            GameManager.Instance.BUILDING_DATA = new BuildingData[] { House, Quarter };
         }
     }
 }

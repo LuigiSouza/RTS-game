@@ -1,14 +1,15 @@
+using UnityEngine;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using T4.Units.Buildings;
 using T4.Events;
+using T4.Player;
 using T4.Resource;
 using T4.Units;
-using UnityEngine;
+using T4.Units.Buildings;
 using T4.Units.Characters;
-using T4.Player;
-using System.Linq;
 
 namespace T4.Managers
 {
@@ -112,7 +113,31 @@ namespace T4.Managers
         public Dictionary<int, Building> PlayerCastles { get; private set; } = new();
 
         public ObservableCollection<UnitManager> SELECTED_UNITS { get; } = new();
-        [HideInInspector]
-        public BuildingData[] BUILDING_DATA;
+
+        private int CheckVictory()
+        {
+            if(PlayerCastles[PlayerId] == null && PlayerCastles[CpuId] == null)
+                return 0;
+            if(PlayerCastles[PlayerId] == null)
+                return CpuId;
+            if(PlayerCastles[CpuId] == null)
+                return PlayerId;
+            return -1;
+        }
+
+        private void Update()
+        {
+            int victory = CheckVictory();
+            if(victory == -1)
+                return;
+            else if(victory == 0)
+                Debug.Log("Empatou");
+            else if(victory == CpuId)
+                Debug.Log("CPU GANHOU");
+            else if(victory == PlayerId)
+                Debug.Log("Player GANHOU");
+            else
+                throw new NotImplementedException("Condição de vitória desconhecida");
+        }
     }
 }

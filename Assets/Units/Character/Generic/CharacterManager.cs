@@ -52,12 +52,5 @@ namespace T4.Units.Characters
                 Debug.Log("Ola");
             }
         }
-
-        public override void Kill()
-        {
-            base.Kill();
-
-            GameManager.Instance.USER_CHARACTERS[Data.owner].Remove(character);
-        }
     }
 }

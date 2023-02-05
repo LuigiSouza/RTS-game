@@ -30,4 +30,4 @@ MonoBehaviour:
   resourceCapacity: 10
   resourceQuantity: 0
   resourceType: 0
-  collectionTime: 2
+  actionTime: 2

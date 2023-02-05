@@ -19,5 +19,10 @@ namespace T4.Units.Characters
 
             GameManager.Instance.USER_CHARACTERS[Owner].Add(this);
         }
+
+        public override void Dispose()
+        {
+            GameManager.Instance.USER_CHARACTERS[Owner].Remove(this);
+        }
     }
 }

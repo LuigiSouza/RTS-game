@@ -15,6 +15,7 @@ namespace T4.Units.Characters
         {
             if (behaviourTarget == BehaviourType.NONE)
             {
+                unit = null;
                 base.FixedUpdate();
                 return;
             }
@@ -23,12 +24,10 @@ namespace T4.Units.Characters
             {
                 if (isDirty)
                 {
-                    Debug.Log("Indo Atacar");
                     SetEnemyTarget();
                 }
                 else
                 {
-                    Debug.Log("Atacando");
                     AttackBehaviour();
                 }
             }
@@ -51,13 +50,9 @@ namespace T4.Units.Characters
         {
             if (character.Data.state == UnitState.FOLLOWING)
             {
-                if (canAct)
+                if (canAct && target != null)
                 {
                     MoveCharacter(target.transform.position, UnitState.ATTTACKING);
-                }
-                else
-                {
-                    MoveCharacter(target.transform.position, UnitState.FOLLOWING);
                 }
             }
             else if (character.Data.state == UnitState.ATTTACKING)
@@ -80,7 +75,7 @@ namespace T4.Units.Characters
         private void AttackUnit()
         {
             float passed = Time.realtimeSinceStartup - LastAcionTime;
-            if (passed >= Data.collectionTime)
+            if (passed >= Data.actionTime)
             {
                 if (unit != null)
                 {

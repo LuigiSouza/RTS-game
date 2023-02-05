@@ -179,8 +179,8 @@ namespace T4.Units
 
         public virtual void Kill()
         {
-            GameManager.Instance.USER_UNITS[Data.owner].Remove(Unit);
             Destroy(gameObject);
+            Unit.Dispose();
         }
     }
 }

@@ -70,7 +70,7 @@ namespace T4.Units.Characters
         private void ProduceResources()
         {
             float passed = Time.realtimeSinceStartup - LastAcionTime;
-            if (passed >= Data.collectionTime)
+            if (passed >= Data.actionTime)
             {
                 if (Resource && Resource.Extract())
                 {
@@ -186,7 +186,7 @@ namespace T4.Units.Characters
         private void ConstructBuild()
         {
             float passed = Time.realtimeSinceStartup - LastAcionTime;
-            if (passed >= Data.collectionTime)
+            if (passed >= Data.actionTime)
             {
                 if (Building != null && !Building.Construct(Data.strength))
                 {

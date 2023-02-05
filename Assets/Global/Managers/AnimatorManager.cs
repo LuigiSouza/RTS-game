@@ -7,7 +7,7 @@ using UnityEngine;
 namespace T4.Managers
 {
     [System.Serializable]
-    struct StateACtion
+    struct StateAction
     {
         public UnitState state;
         public string key;
@@ -16,7 +16,7 @@ namespace T4.Managers
     public class AnimatorManager : MonoBehaviour
     {
         [SerializeField]
-        private List<StateACtion> animationKeyList;
+        private List<StateAction> animationKeyList;
 
         [SerializeField]
         private CharacterBehaviour behaviour;
@@ -30,9 +30,9 @@ namespace T4.Managers
         {
             if (behaviour != null)
             {
-                StateACtion action = animationKeyList.FirstOrDefault(e => e.state == behaviour.CurrentState);
+                StateAction action = animationKeyList.FirstOrDefault(e => e.state == behaviour.CurrentState);
                 if (action.key == previousState) return;
-                if (previousState != "") animatorController.SetBool(previousState, false);
+                if (previousState != "" && previousState != null) animatorController.SetBool(previousState, false);
                 previousState = action.key;
                 if (action.key == null) return;
                 animatorController.SetBool(action.key, true);
