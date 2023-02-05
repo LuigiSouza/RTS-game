@@ -75,6 +75,7 @@ namespace T4.Units
         public virtual void TakeHit(int value)
         {
             HP += value;
+            UnitManager.UpdateHealthBar();
             EventManager.Instance.Raise(new UpdateHealthHandler(UnitManager, HP, MaxHP));
         }
     }

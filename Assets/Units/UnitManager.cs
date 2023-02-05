@@ -145,9 +145,8 @@ namespace T4.Units
             transform.Find("Mesh").GetComponent<Renderer>().materials = materials;
         }
 
-        public void TakeHit(int value)
+        public void UpdateHealthBar()
         {
-            Unit.TakeHit(value);
             if (healthBar != null) healthBar.UpdateHealth(Unit.HP, Unit.MaxHP);
         }
 

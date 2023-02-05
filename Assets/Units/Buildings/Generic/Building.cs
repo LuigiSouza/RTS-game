@@ -74,7 +74,7 @@ namespace T4.Units.Buildings
             if (state != BuildingStates.PENDING) return true;
 
             int sum = HP + amount >= MaxHP ? MaxHP : HP + amount;
-            buildingManager.TakeHit(sum - HP);
+            TakeHit(sum - HP);
 
             if (sum >= MaxHP)
             {
