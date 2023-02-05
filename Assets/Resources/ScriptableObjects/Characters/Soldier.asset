@@ -25,7 +25,7 @@ MonoBehaviour:
     amount: 30
   abilities: []
   prefab: {fileID: 3616701865613567754, guid: 89181be5895e8d1459ca4859a630c4dc, type: 3}
-  fieldOfView: 15
+  fieldOfView: 20
   owner: 0
   resourceCapacity: 0
   resourceQuantity: 0

@@ -74,6 +74,7 @@ namespace T4.Units.Characters
 
         protected void UpdateTarget(GameObject target, BehaviourType behaviour, UnitState state)
         {
+            if(target == null) target = character.gameObject;
             SetTarget(target, behaviour);
             MoveCharacter(target.transform.position, state);
         }

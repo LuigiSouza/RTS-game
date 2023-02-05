@@ -69,7 +69,7 @@ namespace T4.UI.Match.Menus
 
         private void OnChangeHealth(UpdateHealthHandler e)
         {
-            if (e.unit != selectedUnit.UnitManager) return;
+            if (selectedUnit == null || e.unit != selectedUnit.UnitManager) return;
 
             unitInfo.SetHealthBarFill(e.hp, e.maxHp);
         }

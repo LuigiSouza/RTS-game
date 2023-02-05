@@ -155,6 +155,8 @@ MonoBehaviour:
     key: Walking
   - state: 5
     key: Attacking
+  - state: 1
+    key: Walking
   behaviour: {fileID: -3673409735733527340}
   animatorController: {fileID: 8825825987435509528}
 --- !u!4 &6268851516184046179 stripped

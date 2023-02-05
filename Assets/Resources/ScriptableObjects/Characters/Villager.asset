@@ -25,7 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: de387b2adc7b9e341b5d1e8cbe1393b8, type: 2}
   - {fileID: 11400000, guid: db1f452415cf0be4f87601ffa65beca4, type: 2}
   prefab: {fileID: 3616701865613567754, guid: 4f875ca9566b2804fa9ec030336773f1, type: 3}
-  fieldOfView: 10
+  fieldOfView: 15
   owner: 0
   resourceCapacity: 10
   resourceQuantity: 0

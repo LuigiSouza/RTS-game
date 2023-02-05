@@ -85,6 +85,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1909446858532873740, guid: 4b3bde26a909765438a17f9564188ff5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2019242000650379013, guid: 4b3bde26a909765438a17f9564188ff5, type: 3}
       propertyPath: m_Name
       value: VillagerPrefab

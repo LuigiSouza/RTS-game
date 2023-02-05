@@ -36,12 +36,10 @@ namespace T4.Units.Characters
             {
                 if (isDirty)
                 {
-                    Debug.Log("Indo Construir");
                     SetBuildTarget();
                 }
                 else
                 {
-                    Debug.Log("Construindo");
                     BuildBehaviour();
                 }
             }
@@ -58,6 +56,10 @@ namespace T4.Units.Characters
             if (prevTarget != null)
             {
                 UpdateTarget(prevTarget, BehaviourType.COLLECT, UnitState.FOLLOWING);
+            }
+            else
+            {
+                UpdateTarget(null, BehaviourType.NONE, UnitState.IDLE);
             }
             GameManager.Instance.GetResource(character.Unit.Owner, Data.resourceType).AddAmount(Data.resourceQuantity);
             EventManager.Instance.Raise(new ChangeResourceEventHandler());
@@ -109,7 +111,7 @@ namespace T4.Units.Characters
         {
             if (character.Data.state == UnitState.FOLLOWING)
             {
-                if (canAct)
+                if (canAct && target != null)
                 {
                     MoveCharacter(target.transform.position, UnitState.WORKING);
                 }
@@ -133,6 +135,7 @@ namespace T4.Units.Characters
             {
                 if (canAct)
                 {
+                    Debug.Log("Retornou os recursos");
                     ReturnResources();
                 }
             }
@@ -191,7 +194,7 @@ namespace T4.Units.Characters
                 }
                 else
                 {
-                    UpdateTarget(character.gameObject, BehaviourType.NONE, UnitState.IDLE);
+                    UpdateTarget(null, BehaviourType.NONE, UnitState.IDLE);
                 }
             }
         }
