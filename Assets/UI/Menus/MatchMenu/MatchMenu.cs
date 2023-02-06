@@ -41,7 +41,7 @@ namespace T4.UI.Match.Menus
 
         private Unit selectedUnit;
 
-        private List<SpawnButton> dictButtons = new();
+        private readonly List<SpawnButton> dictButtons = new();
         private Dictionary<ResourceType, TMP_Text> ResourceTexts { get; } = new();
 
         protected override void Start()

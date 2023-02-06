@@ -64,5 +64,11 @@ namespace T4.Units.Abilities
 
             return true;
         }
+        public virtual AbilityData Clone()
+        {
+            AbilityData clone = (AbilityData)MemberwiseClone();
+            clone.unitReference = unitReference.Clone();
+            return clone;
+        }
     }
 }

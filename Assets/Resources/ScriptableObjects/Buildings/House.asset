@@ -16,8 +16,9 @@ MonoBehaviour:
   description: A small house to shelter some people.
   code: 0
   state: 0
-  healthpoints: 500
+  healthpoints: 750
   strength: 0
+  actionTime: 0
   cost:
   - code: 1
     amount: 100

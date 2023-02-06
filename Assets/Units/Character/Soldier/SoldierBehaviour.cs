@@ -1,15 +1,11 @@
-using T4.Events;
 using T4.Globals;
-using T4.Managers;
-using T4.Resource;
-using T4.Units.Buildings;
 using UnityEngine;
 
 namespace T4.Units.Characters
 {
     public class SoldierBehaviour : CharacterBehaviour
     {
-        private Unit unit;
+        private UnitManager unit;
 
         protected override void FixedUpdate()
         {
@@ -39,8 +35,8 @@ namespace T4.Units.Characters
         {
             if (1 << target.layer == LayerMaskValues.UnitLayer)
             {
-                MoveCharacter(target.transform.position, UnitState.FOLLOWING);
-                unit = target.GetComponent<UnitManager>().Unit;
+                MoveCharacter(target.transform, UnitState.FOLLOWING);
+                unit = target.GetComponent<UnitManager>();
             }
             LastAcionTime = -1;
             isDirty = false;
@@ -52,7 +48,7 @@ namespace T4.Units.Characters
             {
                 if (canAct && target != null)
                 {
-                    MoveCharacter(target.transform.position, UnitState.ATTTACKING);
+                    MoveCharacter(target.transform, UnitState.ATTTACKING);
                 }
             }
             else if (character.Data.state == UnitState.ATTTACKING)
@@ -60,7 +56,7 @@ namespace T4.Units.Characters
                 if (!canAct)
                 {
                     LastAcionTime = -1;
-                    MoveCharacter(target.transform.position, UnitState.FOLLOWING);
+                    MoveCharacter(target.transform, UnitState.FOLLOWING);
                 }
                 else if (LastAcionTime < 0)
                 {
@@ -79,7 +75,7 @@ namespace T4.Units.Characters
             {
                 if (unit != null)
                 {
-                    unit.TakeHit(-Data.strength);
+                    unit.Unit.TakeHit(-Data.strength);
                     LastAcionTime = Time.realtimeSinceStartup;
                 }
                 else

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace T4.Managers
 {
     [System.Serializable]
-    struct StateAction
+    internal struct StateAction
     {
         public UnitState state;
         public string key;
@@ -31,10 +31,22 @@ namespace T4.Managers
             if (behaviour != null)
             {
                 StateAction action = animationKeyList.FirstOrDefault(e => e.state == behaviour.CurrentState);
-                if (action.key == previousState) return;
-                if (previousState != "" && previousState != null) animatorController.SetBool(previousState, false);
+                if (action.key == previousState)
+                {
+                    return;
+                }
+
+                if (previousState != "" && previousState != null)
+                {
+                    animatorController.SetBool(previousState, false);
+                }
+
                 previousState = action.key;
-                if (action.key == null) return;
+                if (action.key == null)
+                {
+                    return;
+                }
+
                 animatorController.SetBool(action.key, true);
             }
         }

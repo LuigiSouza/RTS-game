@@ -46,7 +46,7 @@ namespace T4.Units.Characters
             else if (target == null)
             {
                 behaviourTarget = BehaviourType.NONE;
-                MoveCharacter(transform.position, UnitState.IDLE);
+                MoveCharacter(transform, UnitState.IDLE);
             }
         }
 
@@ -94,7 +94,7 @@ namespace T4.Units.Characters
         {
             if (1 << target.layer == LayerMaskValues.ResourceVeinLayer)
             {
-                MoveCharacter(target.transform.position, UnitState.FOLLOWING);
+                MoveCharacter(target.transform, UnitState.FOLLOWING);
                 Resource = target.GetComponent<GameResource>();
                 if (Data.resourceType != Resource.Type)
                 {
@@ -113,7 +113,7 @@ namespace T4.Units.Characters
             {
                 if (canAct && target != null)
                 {
-                    MoveCharacter(target.transform.position, UnitState.WORKING);
+                    MoveCharacter(target.transform, UnitState.WORKING);
                 }
             }
             else if (character.Data.state == UnitState.WORKING)
@@ -135,7 +135,6 @@ namespace T4.Units.Characters
             {
                 if (canAct)
                 {
-                    Debug.Log("Retornou os recursos");
                     ReturnResources();
                 }
             }
@@ -149,7 +148,7 @@ namespace T4.Units.Characters
             {
                 if (target.TryGetComponent<BuildingManager>(out var _))
                 {
-                    MoveCharacter(target.transform.position, UnitState.FOLLOWING);
+                    MoveCharacter(target.transform, UnitState.FOLLOWING);
                 }
                 Building = target.GetComponent<BuildingManager>().Unit as Building;
             }
@@ -163,7 +162,7 @@ namespace T4.Units.Characters
             {
                 if (canAct)
                 {
-                    MoveCharacter(target.transform.position, UnitState.WORKING);
+                    MoveCharacter(target.transform, UnitState.WORKING);
                 }
             }
             else if (character.Data.state == UnitState.WORKING)

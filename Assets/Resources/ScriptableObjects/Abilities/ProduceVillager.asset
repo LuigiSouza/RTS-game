@@ -19,4 +19,3 @@ MonoBehaviour:
   unitReference: {fileID: 11400000, guid: 07e57ceb3cacf8344b0b840efa4507ac, type: 2}
   castTime: 3
   sprite: {fileID: 0}
-  isAvaiable: 0

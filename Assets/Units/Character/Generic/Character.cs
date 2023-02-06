@@ -8,7 +8,7 @@ namespace T4.Units.Characters
         private readonly CharacterData data;
         public new UnitData Data { get { return data; } }
 
-        public Character(CharacterData data, int owner) : base(data, owner)
+        protected Character(CharacterData data, int owner) : base(data, owner)
         {
             this.data = data;
         }

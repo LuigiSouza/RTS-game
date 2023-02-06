@@ -10,6 +10,8 @@ using T4.Resource;
 using T4.Units;
 using T4.Units.Buildings;
 using T4.Units.Characters;
+using T4.Globals;
+using UnityEngine.SceneManagement;
 
 namespace T4.Managers
 {
@@ -39,7 +41,7 @@ namespace T4.Managers
 
         public int PlayerId { get; private set; }
         public int CpuId { get; private set; }
-        private Dictionary<int, PlayerData> Players = new();
+        private readonly Dictionary<int, PlayerData> Players = new();
 
         private void Init()
         {
@@ -69,14 +71,14 @@ namespace T4.Managers
             Vector3 playerPos = new(15, 0, 75);
             Vector3 enemyPos = new(180, 0, 110);
             BuildingPlacer.Instance.SpawnBuilding(BuildingDataBuilder.Castle, CpuId, enemyPos);
-            BuildingPlacer.Instance.SpawnBuilding(BuildingDataBuilder.Quarter, CpuId, enemyPos + new Vector3(10,0,10));
             BuildingPlacer.Instance.SpawnBuilding(BuildingDataBuilder.Castle, PlayerId, playerPos);
-            EventManager.Instance.Raise(new MoveCameraEventHandler(playerPos));
-
             foreach (KeyValuePair<int, HashSet<Unit>> val in USER_UNITS)
             {
                 PlayerCastles.Add(val.Key, (Building)val.Value.ToArray()[0]);
             }
+            BuildingPlacer.Instance.SpawnBuilding(BuildingDataBuilder.Quarter, CpuId, enemyPos + new Vector3(-10, 0, -10));
+            EventManager.Instance.Raise(new MoveCameraEventHandler(playerPos));
+
         }
 
         public PlayerData GetPlayer(int id)
@@ -93,15 +95,15 @@ namespace T4.Managers
         {
             GAME_RESOURCES.Add(PlayerId, new()
             {
-                { ResourceType.FOOD, new Resource.Resource(ResourceType.FOOD, 2000) },
-                { ResourceType.STONE, new Resource.Resource(ResourceType.STONE, 2000) },
-                { ResourceType.GOLD, new Resource.Resource(ResourceType.GOLD, 2000) },
+                { ResourceType.FOOD, new Resource.Resource(ResourceType.FOOD, 200) },
+                { ResourceType.STONE, new Resource.Resource(ResourceType.STONE, 100) },
+                { ResourceType.GOLD, new Resource.Resource(ResourceType.GOLD, 0) },
             });
             GAME_RESOURCES.Add(CpuId, new()
             {
-                { ResourceType.FOOD, new Resource.Resource(ResourceType.FOOD, 5000) },
-                { ResourceType.STONE, new Resource.Resource(ResourceType.STONE, 5000) },
-                { ResourceType.GOLD, new Resource.Resource(ResourceType.GOLD, 5000) },
+                { ResourceType.FOOD, new Resource.Resource(ResourceType.FOOD, 130) },
+                { ResourceType.STONE, new Resource.Resource(ResourceType.STONE, 100) },
+                { ResourceType.GOLD, new Resource.Resource(ResourceType.GOLD, 50) },
             });
         }
 
@@ -116,26 +118,38 @@ namespace T4.Managers
 
         private int CheckVictory()
         {
-            if(PlayerCastles[PlayerId] == null && PlayerCastles[CpuId] == null)
+            if (PlayerCastles[PlayerId].HP < 0 && PlayerCastles[CpuId].HP < 0)
                 return 0;
-            if(PlayerCastles[PlayerId] == null)
+            if (PlayerCastles[PlayerId].HP < 0)
                 return CpuId;
-            if(PlayerCastles[CpuId] == null)
+            if (PlayerCastles[CpuId].HP < 0)
                 return PlayerId;
             return -1;
         }
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Space))
+                SceneManager.LoadScene(SceneValues.MainMenuScene);
+
             int victory = CheckVictory();
-            if(victory == -1)
+            if (victory == -1)
                 return;
-            else if(victory == 0)
+            else if (victory == 0)
+            {
+                SceneManager.LoadScene(SceneValues.MainMenuScene);
                 Debug.Log("Empatou");
-            else if(victory == CpuId)
+            }
+            else if (victory == CpuId)
+            {
+                SceneManager.LoadScene(SceneValues.MainMenuScene);
                 Debug.Log("CPU GANHOU");
-            else if(victory == PlayerId)
+            }
+            else if (victory == PlayerId)
+            {
+                SceneManager.LoadScene(SceneValues.MainMenuScene);
                 Debug.Log("Player GANHOU");
+            }
             else
                 throw new NotImplementedException("Condição de vitória desconhecida");
         }

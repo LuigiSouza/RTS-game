@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: type
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1392352462692715549, guid: 6bb3a798f7fd9214d910d8799d595e33, type: 3}
+      propertyPath: remainingResources
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 3204075685272823723, guid: 6bb3a798f7fd9214d910d8799d595e33, type: 3}
       propertyPath: m_Carve
       value: 1

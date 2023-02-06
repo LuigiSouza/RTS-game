@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Main castle
   code: 1
   state: 0
-  healthpoints: 1000
+  healthpoints: 5
   strength: 100
   actionTime: 1
   cost:

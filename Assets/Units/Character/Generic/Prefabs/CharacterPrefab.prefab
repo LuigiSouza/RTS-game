@@ -181,6 +181,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FieldOfView
       objectReference: {fileID: 0}
+    - target: {fileID: 1842749746992709881, guid: f9e66bd7a3f0590479eac92a8f39a0c4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2363634085587502678, guid: f9e66bd7a3f0590479eac92a8f39a0c4, type: 3}
       propertyPath: m_RootOrder
       value: 1

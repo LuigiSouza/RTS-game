@@ -8,6 +8,5 @@ namespace T4.Globals
     {
         public static string MainMenuScene = "MainMenuScene";
         public static string MainGameScene = "MainGameScene";
-        public static string GameOverScene = "GameOverScene";
     }
 }

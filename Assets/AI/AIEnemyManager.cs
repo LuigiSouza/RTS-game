@@ -77,11 +77,11 @@ namespace T4.AI.Enemy
 
             if (CountUnitType(UnitType.VILLAGER) < 2 * UnitsPerResource)
             {
-                if(!Castle.CastingAbility) Castle.TriggerSkill(0);
+                if (!Castle.CastingAbility) Castle.TriggerSkill(0);
             }
             else if (CountUnitType(UnitType.SOLDIER) < UnitsToAttack)
             {
-                if(!Quarter.CastingAbility) Quarter.TriggerSkill(0);
+                if (!Quarter.CastingAbility) Quarter.TriggerSkill(0);
             }
             else
             {
@@ -100,9 +100,7 @@ namespace T4.AI.Enemy
 
         private int CountUnitType(UnitType type)
         {
-            return GameManager.Instance.USER_CHARACTERS[ID]
-                .Where(c => c.Data.code == type)
-                .Count();
+            return GameManager.Instance.USER_CHARACTERS[ID].Count(c => c.Data.code == type);
         }
 
         private void SendUnitsToCollect(int workers, ref List<GameResource> resourceList)
@@ -128,7 +126,7 @@ namespace T4.AI.Enemy
             List<GameResource> listCopy = new(resourceList);
             foreach (GameResource res in listCopy)
             {
-                if(res == null) 
+                if (res == null)
                 {
                     resourceList.Remove(res);
                     continue;

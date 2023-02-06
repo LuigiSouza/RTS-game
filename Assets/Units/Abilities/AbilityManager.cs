@@ -13,7 +13,7 @@ namespace T4.Units.Abilities
 
         public void Initialize(AbilityData ability, GameObject source)
         {
-            this.ability = ability;
+            this.ability = ability.Clone();
             this.source = source;
         }
 

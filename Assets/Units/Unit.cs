@@ -28,8 +28,8 @@ namespace T4.Units
 
         public Unit(UnitData data, int owner)
         {
-            Data = data;
             data.owner = owner;
+            Data = data;
             HP = data.healthpoints;
             Uid = System.Guid.NewGuid().ToString();
 
@@ -41,7 +41,7 @@ namespace T4.Units
             AbilityManager sm; abilitiesManagers = new List<AbilityManager>();
             foreach (AbilityData ability in data.abilities)
             {
-                sm = g.AddComponent<AbilityManager>();
+                sm = g.AddComponent<AbilityManager>(); ability.unitReference.owner = Data.owner;
                 sm.Initialize(ability, g);
                 abilitiesManagers.Add(sm);
             }

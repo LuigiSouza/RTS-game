@@ -114,7 +114,8 @@ namespace T4.Units
             }
 
             GameManager.Instance.SELECTED_UNITS.Remove(this);
-            selectionCircle.SetActive(false);
+
+            if (selectionCircle != null) selectionCircle.SetActive(false);
         }
         protected virtual bool IsActive()
         {
@@ -150,7 +151,7 @@ namespace T4.Units
             if (healthBar != null) healthBar.UpdateHealth(Unit.HP, Unit.MaxHP);
         }
 
-        private List<Tuple<int, GameObject>> queueSkill = new();
+        private readonly List<Tuple<int, GameObject>> queueSkill = new();
 
         public void TriggerSkill(int index, GameObject target = null)
         {

@@ -35,22 +35,19 @@ namespace T4.Units.Characters
             FOV.SetFovSize(Data.fieldOfView);
         }
 
-        public void MoveTo(Vector3 targetPosition)
+        public void MoveTo(Vector3 targetPosition, float radius = 0)
         {
-            agent.destination = targetPosition;
+            float radianPos = Random.Range(0, 2 * Mathf.PI) * radius;
+            Vector3 targetCircle = targetPosition;
+            targetCircle.x = targetPosition.x + Mathf.Cos(radianPos);
+            targetCircle.y = targetPosition.y;
+            targetCircle.z = targetPosition.z + Mathf.Sin(radianPos);
+            agent.destination = targetCircle;
         }
 
         public bool IsMoving()
         {
             return agent.remainingDistance > agent.stoppingDistance;
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag(TagValues.ResourceRange))
-            {
-                Debug.Log("Ola");
-            }
         }
     }
 }

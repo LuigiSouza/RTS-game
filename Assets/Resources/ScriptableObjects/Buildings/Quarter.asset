@@ -16,8 +16,9 @@ MonoBehaviour:
   description: A building to create an army.
   code: 2
   state: 0
-  healthpoints: 1000
+  healthpoints: 1500
   strength: 0
+  actionTime: 0
   cost:
   - code: 1
     amount: 100

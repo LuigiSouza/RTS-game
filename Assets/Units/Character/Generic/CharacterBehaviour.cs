@@ -66,17 +66,17 @@ namespace T4.Units.Characters
         }
 
         #region MOVE CHARACTER
-        protected void MoveCharacter(Vector3 destiny, UnitState state)
+        protected void MoveCharacter(Transform destiny, UnitState state)
         {
             character.Data.state = state;
-            character.MoveTo(destiny);
+            character.MoveTo(destiny.position, transform.lossyScale.x);
         }
 
         protected void UpdateTarget(GameObject target, BehaviourType behaviour, UnitState state)
         {
-            if(target == null) target = character.gameObject;
+            if (target == null) target = character.gameObject;
             SetTarget(target, behaviour);
-            MoveCharacter(target.transform.position, state);
+            MoveCharacter(target.transform, state);
         }
         #endregion
     }
